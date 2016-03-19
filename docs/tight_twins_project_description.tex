@@ -1,0 +1,85 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{indentfirst}
+\usepackage{fullpage}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{authblk}
+
+\selectlanguage{polish}
+
+% Zdefiniowanie autorów i~tytułu:
+\author{Jakub Dutkowski}
+\author{Karol Dzitkowski}
+\author{Tomasz Janiszewski}
+\affil{Wydział Matematyki i Nauk Informacyjnych, Politechnika Warszawska}
+\title{
+	Kombinatoryka na Słowach\\
+	Gra w unikanie ciasnych bliźniaków\\
+	Opis projektu
+	6b\footnote{Gra komputer kontra człowiek (co najmniej 2 poziomy trudności)}
+ }
+ 
+ \renewcommand\Authands{ i }
+
+\begin{document}
+\maketitle\
+\newpage\
+
+
+%Treść:
+\section{Temat projektu}
+Projekt będzie realizował grę w unikanie ciasnych bliźniaków,
+w której biorą udział 2 osoby 
+\begin{enumerate}
+	\item\ Gracz Pierwszy (A) [sterowany przez maszynę]
+	\item\ Gracz Drugi (B) [sterowany przez człowieka]
+\end{enumerate}
+Planszą jest słowo $s$, które składa się ze skończonej,
+liczby znaków $n$ nad skończonym alfabetem $A$.
+Gracz A wskazuje miejsce pomiędzy symbolami w słowie $s$, w którym gracz B
+wstawia dowolny symbol z alfabetu $A$.
+Zadaniem gracza A jest zmuszenie gracza B do stworzenia 
+słowa zawierającego ciasnych bliźniaków.
+
+\section{Aplikacja}
+Aplikacja będzie składała się z dwóch widoków:
+\begin{itemize}
+ \item\ menu
+ \item\ gra
+\end{itemize}
+
+\subsection{Widok menu}
+W tym widoku będą znajdowały się elementy umożliwiające:
+
+\begin{itemize}
+	\item\ rozpoczęcie gry
+	\item\ ustawienie długości słów (rozgrywki)
+	\item\ ustawiania rozmiaru alfabetu $A$ (jako podzbioru alfabetu łacińskiego)
+	\item\ wybór poziomu trudności
+\end{itemize}
+
+\subsection{Widok gry}
+Po rozpoczęciu rozgrywki pojawia się słowo $s$,
+składające się z jednego losowego
+symbolu z wybranego alfabetu $A$.
+Rozpoczyna gracz A, wskazując miejsce w słowie $s$,
+w którym gracz B wstawia wybrany przez
+siebie symbol z alfabetu $A$.
+Gracze powtarzają czynności tak długo aż słowo $s$
+\begin{enumerate}
+	\item\ będzie zawierało ciasnych bliźniaków \label{wygrana:a}
+	\item\ osiągnie maksymalną długość $n$ \label{wygrana:b}
+\end{enumerate}
+
+W przypadku \ref{wygrana:a} wygrywa gracz A, natomiast
+w przypadku \ref{wygrana:b} wygrywa gracz B.
+Po zakończeniu gry wyświetlany jest komunikat o jej wyniku.
+W przypadku \ref{wygrana:a} w słowie $s$ podświetlani są
+ciaśni bliźniacy.
+
+\end{document}

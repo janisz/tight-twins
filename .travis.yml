@@ -1,0 +1,8 @@
+before_install:
+    - sudo apt-get update && sudo apt-get install -y --no-install-recommends texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra texlive-lang-polish lmodern dvipng texlive-latex-recommended
+    - sudo apt-get install -qq chktex
+
+script:
+    - mkdir _build
+    - pdflatex -interaction=nonstopmode -halt-on-error -output-directory _build docs/*.tex
+    - chktex docs/*.tex
