@@ -16,12 +16,14 @@
 \author{Jakub Dutkowski}
 \author{Karol Dzitkowski}
 \author{Tomasz Janiszewski}
+\author{Michał Padzik}
 \affil{Wydział Matematyki i Nauk Informacyjnych, Politechnika Warszawska}
 \title{
 	Kombinatoryka na Słowach\\
 	Gra w unikanie ciasnych bliźniaków\\
 	Opis projektu
-	6b\footnote{Gra komputer kontra człowiek (co najmniej 2 poziomy trudności)}
+	6bc\footnote{Gra komputer kontra człowiek (co najmniej 2 poziomy trudności)}
+\footnote{Gra komputer kontra komputer (co najmniej 2 poziomy trudności)}
  }
  
  \renewcommand\Authands{ i }
@@ -33,10 +35,10 @@
 
 %Treść:
 \section{Definicja ciasnych bliźniaków}
-Niech $S = s_1 s_2 s_3 ... s_n$ będzie skończoną sekwencją symboli. Dwie pod-sekwencje
-$S_1 = s_{i_1} s_{i_2} s_{i_3} ... s_{i_k}$ i $S_2 = s_{j_1} s_{j_2} s_{j_3} ... s_{j_k}$
+Niech $S = s_1 s_2 s_3 \ldots\ s_n$ będzie skończoną sekwencją symboli. Dwie pod-sekwencje
+$S_1 = s_{i_1} s_{i_2} s_{i_3} \ldots\ s_{i_k}$ i $S_2 = s_{j_1} s_{j_2} s_{j_3} \ldots\ s_{j_k}$
 nazywane są bliźniakami jeśli są identyczne oraz rozłączne, czyli $s_{i_p} = s_{j_p}$ dla 
-wszystkich $p = {1, 2, 3, ..., k}$ oraz $ i_p \neq j_p $ dla wszystkich $ p,q = {1, 2, 3, ..., k}$.
+wszystkich $p = {1, 2, 3, \ldots\, k}$ oraz $ i_p \neq j_p $ dla wszystkich $ p,q = {1, 2, 3, \ldots\, k}$.
 Mówimy że para bliźniaków jest ciasna, jeżeli połączenie zbiorów ich indeksów tworzy pełny segment
 liczb całkowitych, czyli para tworzy jeden blok. Dla przykładu ciąg $231213231$ ma ciasnych bliźniaków
 w formie $123$, natomiast ciąg $123132312$ nie ma żadnych.
@@ -70,6 +72,7 @@ W tym widoku będą znajdowały się elementy umożliwiające:
 	\item\ ustawienie długości słów (rozgrywki)
 	\item\ ustawiania rozmiaru alfabetu $A$ (jako podzbioru alfabetu łacińskiego)
 	\item\ wybór poziomu trudności
+	\item\ wybór graczy
 \end{itemize}
 
 \subsection{Widok gry}
@@ -81,8 +84,8 @@ w którym gracz B wstawia wybrany przez
 siebie symbol z alfabetu $A$.
 Gracze powtarzają czynności tak długo aż słowo $s$
 \begin{enumerate}
-	\item\ będzie zawierało ciasnych bliźniaków \label{wygrana:a}
-	\item\ osiągnie maksymalną długość $n$ \label{wygrana:b}
+	\item\ będzie zawierało ciasnych bliźniaków\label{wygrana:a}
+	\item\ osiągnie maksymalną długość $n$\label{wygrana:b}
 \end{enumerate}
 
 W przypadku \ref{wygrana:a} wygrywa gracz A, natomiast
