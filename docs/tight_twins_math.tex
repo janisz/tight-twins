@@ -11,7 +11,7 @@
 \usepackage{authblk}
 
 \usepackage{amsthm}
- 
+
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}{Theorem}[section]
@@ -33,7 +33,7 @@
 	6bc\footnote{Gra komputer kontra człowiek (co najmniej 2 poziomy trudności)}
 \footnote{Gra komputer kontra komputer (co najmniej 2 poziomy trudności)}
  }
- 
+
  \renewcommand\Authands{ i }
 
 \begin{document}
@@ -53,7 +53,7 @@ nazywamy $słowem niekwadratowym$
 \begin{definition}{(Bliźniak)}\label{def:blizniak}
 Niech $S = s_1 s_2 s_3 \ldots\ s_n$ będzie skończoną sekwencją symboli. Dwie pod-sekwencje
 $S_1 = s_{i_1} s_{i_2} s_{i_3} \ldots\ s_{i_k}$ i $S_2 = s_{j_1} s_{j_2} s_{j_3} \ldots\ s_{j_k}$
-nazywane są bliźniakami jeśli są identyczne oraz rozłączne, czyli $s_{i_p} = s_{j_p}$ dla 
+nazywane są bliźniakami jeśli są identyczne oraz rozłączne, czyli $s_{i_p} = s_{j_p}$ dla
 wszystkich $p = {1, 2, 3, \ldots\, k}$ oraz $ i_p \neq j_p $ dla wszystkich $ p,q = {1, 2, 3, \ldots\, k}$.
 \end{definition}
 \begin{definition}{(Ciasny bliźniak)}
@@ -75,10 +75,10 @@ nie jest $k-triolą$.
 Słowo które pokrywające się podciągi jest kwadratowe
 \begin{proof}
 Niech $w$ będzie słowem zawierającym dwa pokrywające się podciągi tego
-samego niepustego słowa $u$. 
+samego niepustego słowa $u$.
 Wtedy $$w = zuy = x'uy'$$ dla słów $x,x',y,y'$. Możemy założyć że $x$
-jest mniejszej długości niż $x'$. Ponieważ wystąpienia się pokrywają 
-jedno ma długość $|x| < |x'| < |xu| < |x'u|$. Więc podstawiając 
+jest mniejszej długości niż $x'$. Ponieważ wystąpienia się pokrywają
+jedno ma długość $|x| < |x'| < |xu| < |x'u|$. Więc podstawiając
 $sx = x'$ i $x'q = xu$ otrzymujemy $xu = x'q = xsq$
 skąd $u =  sq$ i $$w = x'uy' = xssqy' $$
 Pokazując że $w$ zawiera kwadrat $ss$.
@@ -87,7 +87,7 @@ Pokazując że $w$ zawiera kwadrat $ss$.
 
 \begin{lemma}\label{lemat:2}
 Niech $p$ będzie słowem takim że $p^2$ nie zawiera żadnego innego kwadratu niż $p$.
-$\forall n > 1$ jeśli 
+$\forall n > 1$ jeśli
 $p^n$ zawiera $u^2$, wtedy $$|u| \equiv 0 ~mod~ |p|^3$$
 \begin{proof}
 Niech $u^2$ będzie częścią $p^n$. Pokażemy że istnieje prefiks $x$ i $x'$
@@ -122,9 +122,9 @@ Zaczynając od $p = abacbc$ możemy otrzymać
 $$
 x = adbacdc, y = abdacbc, z = acadcbc, t = abacdbc
 $$
-zdefiniujmy przekształcenie 
+zdefiniujmy przekształcenie
 $$
-h: \left\lbrace a,b,c,d\right\rbrace\star \rightarrow \left\lbrace a,b,c,d\right\rbrace\star 
+h: \left\lbrace a,b,c,d\right\rbrace\star \rightarrow \left\lbrace a,b,c,d\right\rbrace\star
 $$
 przez
 $$
@@ -141,7 +141,7 @@ $$
 Niech $v'$ pochodzi z $v$ poprzez usunięcie wystąpień litery $d$.
 
 $v$ zawiera co najmniej jedno wystąpienie $d$. W przeciwnym razie $v = v'$ i
-$v'^2$ jest częścią $w$ a w konsekwencji $p^2$ (wbrew założeniom). Korzystając z 
+$v'^2$ jest częścią $w$ a w konsekwencji $p^2$ (wbrew założeniom). Korzystając z
 powyższych lematów wyprowadźmy
 $$
 v' = p_2 p^l P_1 m \quad l \geq 0, p = p_1 p_2
@@ -150,25 +150,25 @@ Więc $v$ zawiera dokładnie $1+l$ wystąpień litery $d$. Niech
 $$
 v = sr_1\dots r_l\overline{s} = s'r'_1\dots r'_l\overline{s'}
 $$
-gdzie 
+gdzie
 $$
-r_1,\ldots,r_l,r_1',\ldots,r_l',\overline{s},\overline{s}' 
+r_1,\ldots,r_l,r_1',\ldots,r_l',\overline{s},\overline{s}'
 \in X = \left\lbrace x,y,z,t \right\rbrace
 $$
 Jeśli $s \neq s'$ wtedy łatwo zauważyć że $p^2$ zawiera kwadrat.
-Zatem $s=s', r_i=r_i'$ dla 
-$1 \leq i \leq l$ 
-i 
+Zatem $s=s', r_i=r_i'$ dla
+$1 \leq i \leq l$
+i
 $\overline{s} = \overline{s}'$. Ponieważ $\overline{s}s'$ zawiera
-jedno $d$ s (i $s'$) lub $\overline{s}$ (and $\overline{s}'$) 
+jedno $d$ s (i $s'$) lub $\overline{s}$ (and $\overline{s}'$)
 zawierają $d$. Ale sufiks/prefiks słowa w $X$ zawierającego $d$
 determinuje słowo w $X$. To oznacza że $u$ zawiera kwadrat.
 \end{proof}
 \end{theorem}
 
 \begin{theorem}
-Niech $n > 0 \in \mathsf{N}$ i 
-niech $L_1,L_2,\ldots,L_n$ będzie sekwencją 
+Niech $n > 0 \in \mathsf{N}$ i
+niech $L_1,L_2,\ldots,L_n$ będzie sekwencją
 siedmio elementowych zbiorów. Wtedy istnieje sekwencja $S=s_1s_2\ldots s_n$ w której
 $\forall s_i \in L_i \quad i = 1,2,\ldots,n$ nie ma bliźniaków\ref{def:blizniak}
 \end{theorem}
