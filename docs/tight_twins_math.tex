@@ -1,0 +1,170 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{indentfirst}
+\usepackage{fullpage}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{authblk}
+
+\usepackage{amsthm}
+ 
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{example}{Example}[section]
+
+\selectlanguage{polish}
+
+% Zdefiniowanie autorów i~tytułu:
+\author{Jakub Dutkowski}
+\author{Karol Dzitkowski}
+\author{Tomasz Janiszewski}
+\author{Michał Padzik}
+\affil{Wydział Matematyki i Nauk Informacyjnych, Politechnika Warszawska}
+\title{
+	Kombinatoryka na Słowach\\
+	Gra w unikanie ciasnych bliźniaków\\
+	Opis matematyczny projektu
+	6bc\footnote{Gra komputer kontra człowiek (co najmniej 2 poziomy trudności)}
+\footnote{Gra komputer kontra komputer (co najmniej 2 poziomy trudności)}
+ }
+ 
+ \renewcommand\Authands{ i }
+
+\begin{document}
+\maketitle\
+\newpage\
+
+
+%Treść:
+\begin{definition}{(kwadrat)}\label{def:sqr-word}
+Słowem $w$, które zawiera podsłowo dwa razy z rzędu
+nazywamy $słowem kwadratowym$
+\end{definition}
+\begin{definition}{(square-free word)}\label{def:sqr-free-word}
+Słowem $w$, które nie zawiera żadnego podsłowa dwa razy z rzędu
+nazywamy $słowem niekwadratowym$
+\end{definition}
+\begin{definition}{(Bliźniak)}\label{def:blizniak}
+Niech $S = s_1 s_2 s_3 \ldots\ s_n$ będzie skończoną sekwencją symboli. Dwie pod-sekwencje
+$S_1 = s_{i_1} s_{i_2} s_{i_3} \ldots\ s_{i_k}$ i $S_2 = s_{j_1} s_{j_2} s_{j_3} \ldots\ s_{j_k}$
+nazywane są bliźniakami jeśli są identyczne oraz rozłączne, czyli $s_{i_p} = s_{j_p}$ dla 
+wszystkich $p = {1, 2, 3, \ldots\, k}$ oraz $ i_p \neq j_p $ dla wszystkich $ p,q = {1, 2, 3, \ldots\, k}$.
+\end{definition}
+\begin{definition}{(Ciasny bliźniak)}
+Mówimy że para bliźniaków jest ciasna, jeżeli połączenie zbiorów ich indeksów tworzy pełny segment
+liczb całkowitych, czyli para tworzy jeden blok. Dla przykładu ciąg $231213231$ ma ciasnych bliźniaków
+w formie $123$, natomiast ciąg $123132312$ nie ma żadnych.
+\end{definition}
+\begin{definition}[($k-triola$)]\label{def:triola}
+$k-triolą$ nazywamy sekwencjęm zawierającą $k$ identycznych subsekwencji
+których indeksy są parami rozłączne.
+\end{definition}
+\begin{definition}[($k-wolną-triola$)]\label{def:triola}
+$k-wolną-triolą$ nazywamy sekwencję, której żaden segment
+nie jest $k-triolą$.
+\end{definition}
+
+
+\begin{lemma}\label{lemat:1}
+Słowo które pokrywające się podciągi jest kwadratowe
+\begin{proof}
+Niech $w$ będzie słowem zawierającym dwa pokrywające się podciągi tego
+samego niepustego słowa $u$. 
+Wtedy $$w = zuy = x'uy'$$ dla słów $x,x',y,y'$. Możemy założyć że $x$
+jest mniejszej długości niż $x'$. Ponieważ wystąpienia się pokrywają 
+jedno ma długość $|x| < |x'| < |xu| < |x'u|$. Więc podstawiając 
+$sx = x'$ i $x'q = xu$ otrzymujemy $xu = x'q = xsq$
+skąd $u =  sq$ i $$w = x'uy' = xssqy' $$
+Pokazując że $w$ zawiera kwadrat $ss$.
+\end{proof}
+\end{lemma}
+
+\begin{lemma}\label{lemat:2}
+Niech $p$ będzie słowem takim że $p^2$ nie zawiera żadnego innego kwadratu niż $p$.
+$\forall n > 1$ jeśli 
+$p^n$ zawiera $u^2$, wtedy $$|u| \equiv 0 ~mod~ |p|^3$$
+\begin{proof}
+Niech $u^2$ będzie częścią $p^n$. Pokażemy że istnieje prefiks $x$ i $x'$
+słowa $p$ i słowa $y,y'$ oraz $k \in \mathbf{Z}$ takie że
+$$p^k = zuy = x'uy'$$
+Przyjmijmy że $|x| < |x'|$. Jeśli $xu$ jest krótsze niż $x'$, to pierwsze wystąpienie
+$u$ jest częścią $p$. Ale wtedy $u^2$ jest częścią $p^2$. Więc te dwa wystąpienia $u$
+zachodzą na siebie w $p^k$.
+Podstawiając $xs = x'$ lemat \ref{lemat:1} pokazuje że $s^2$ jest częścią $p^2$.
+Co dowodzi
+$$ s = p $$
+\end{proof}
+\end{lemma}
+
+\begin{theorem}
+Nad czteroliterowym alfabetem istnieje $niekwadratowe$
+słowo dowolnej długości.
+\begin{proof}
+Pokażemy, że dowolne niekwadratowe słowo długości $k$ nad alfabetem $A$
+długości $4$, może zbudować dłuższe słowo nad alfabetem $A$.
+
+Niech $p$ będzie słowem and alfabetem trzy literowym -- na przykład $a,b,c$.
+Niech $p$ będzie miało długość co najmniej $4$.
+Niech $p^2$ nie zawiera innego kwadratu niż ono samo.
+Po przez wprowadzenie nowej litery -- na przykład $d$, pomiędzy
+dwie litery w $p$ w czterech różnych miejscach, otrzymamy cztery
+słowa $x,y,z,t$ z których każde zawiera tylko jedno wystąpienie litery $d$,
+a które połączone sprowadzają się do $p$ po przez usunięcie nowej litery -- $d$.
+
+\begin{example}
+Zaczynając od $p = abacbc$ możemy otrzymać
+$$
+x = adbacdc, y = abdacbc, z = acadcbc, t = abacdbc
+$$
+zdefiniujmy przekształcenie 
+$$
+h: \left\lbrace a,b,c,d\right\rbrace\star \rightarrow \left\lbrace a,b,c,d\right\rbrace\star 
+$$
+przez
+$$
+h(a) = x, h(b) = y, h(c) = z, h(d) = t
+$$
+Należy udowodnić że $h$ jest przekształceniem niekwadratowym -- na przykład
+$h(u)$ jest niekwadratowe jeśli $u$ też jest niekwadratowe.
+\end{example}
+Załóżmy że $u$ jest niekwadratowe. Niech $w=h(u)$ gdzie $h$ jest przekształceniem
+zdefiniowanym wyżej. Załóżmy że $w$ zawiera $v^2$. Wtedy
+$$
+w = h(u) = \alpha v^2\beta
+$$
+Niech $v'$ pochodzi z $v$ poprzez usunięcie wystąpień litery $d$.
+
+$v$ zawiera co najmniej jedno wystąpienie $d$. W przeciwnym razie $v = v'$ i
+$v'^2$ jest częścią $w$ a w konsekwencji $p^2$ (wbrew założeniom). Korzystając z 
+powyższych lematów wyprowadźmy
+$$
+v' = p_2 p^l P_1 m \quad l \geq 0, p = p_1 p_2
+$$
+Więc $v$ zawiera dokładnie $1+l$ wystąpień litery $d$. Niech
+$$
+v = sr_1\dots r_l\overline{s} = s'r'_1\dots r'_l\overline{s'}
+$$
+\end{proof}
+\end{theorem}
+
+\begin{theorem}
+Niech $n > 0 \in \mathsf{N}$ i 
+niech $L_1,L_2,\ldots,L_n$ będzie sekwencją 
+siedmio elementowych zbiorów. Wtedy istnieje sekwencja $S=s_1s_2\ldots s_n$ w której
+$\forall s_i \in L_i \quad i = 1,2,\ldots,n$ nie ma bliźniaków\ref{def:blizniak}
+\end{theorem}
+
+\begin{theorem}
+Dla każdego $k$ istnieje funkcja $f(k)$, taka że
+dla dowolnej sekwencji list, każda o długości $f(k)$
+możliwe jest wybranie $k-wolnej-trioli$ z tych list.
+
+\end{theorem}
+
+\end{document}
