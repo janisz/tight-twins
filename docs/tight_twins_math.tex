@@ -9,8 +9,10 @@
 \usepackage{enumerate}
 \usepackage{graphicx}
 \usepackage{authblk}
-
+\usepackage{hyperref}
 \usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
@@ -40,7 +42,7 @@
 \maketitle\
 \newpage\
 
-
+\section{Podstawy teoretyczne pracy}
 %Treść:
 \begin{definition}{(kwadrat)}\label{def:sqr-word}
 Słowo $w$, które zawiera podsłowo dwa razy z rzędu
@@ -69,7 +71,6 @@ których indeksy są parami rozłączne.
 $k-wolną-triolą$ nazywamy sekwencję, której żaden segment
 nie jest $k-triolą$.
 \end{definition}
-
 
 \begin{lemma}\label{lemat:1}
 Słowo które zawiera pokrywające się podciągi jest kwadratowe
@@ -101,6 +102,19 @@ Co dowodzi
 $$ s = p $$
 \end{proof}
 \end{lemma}
+
+\begin{theorem}
+Niech $n > 0 \in \mathsf{N}$ i
+niech $L_1,L_2,\ldots,L_n$ będzie sekwencją
+siedmioelementowych zbiorów. Wtedy istnieje sekwencja $S=s_1s_2\ldots s_n$ w której
+$\forall s_i \in L_i \quad i = 1,2,\ldots,n$ nie ma bliźniaków\ref{def:blizniak}
+\end{theorem}
+
+\begin{theorem}
+Dla każdego $k$ istnieje funkcja $f(k)$, taka że
+dla dowolnej sekwencji list, każda o długości $f(k)$
+możliwe jest wybranie $k-wolnej-trioli$ z tych list.
+\end{theorem}
 
 \begin{theorem}
 Nad czteroliterowym alfabetem istnieje $niekwadratowe$
@@ -167,17 +181,73 @@ determinuje słowo w $X$. To oznacza że $u$ zawiera kwadrat.
 \end{theorem}
 
 \begin{theorem}
-Niech $n > 0 \in \mathsf{N}$ i
-niech $L_1,L_2,\ldots,L_n$ będzie sekwencją
-siedmio elementowych zbiorów. Wtedy istnieje sekwencja $S=s_1s_2\ldots s_n$ w której
-$\forall s_i \in L_i \quad i = 1,2,\ldots,n$ nie ma bliźniaków\ref{def:blizniak}
+Istnieje co najmniej $5.59^n$ słów długości $n$ nad alfabetem długości $7$ nie zawierających ciasnych bliźniaków.
+\begin{proof}
+Niech $\Sigma_m=\{0,1,\cdots ,m-1\}$ będzie alfabetem złożonym z m znaków i niech $L \subset \Sigma^{*}_m$ będzie językiem złożonym z zabronionych podciągów o długości co najmniej 2. Oznaczmy złożoność podciągu $L$ przez $n_i = L \cap \Sigma^{i}_m$. Definiujemy $L'$ jako zbiór takich słów $w$, że $w$ nie należy do $L$ i jego prefix o długości $|w| - 1$ słowa $w$ należy do $L$. Dla każdego zabronionego podciągu $f \in F$, wybieramy liczbę $1 \leq s_f \leq |f|$. Wtedy dla każego $i \geq 1$, definiujemy $a_i \in \mathbb{Z}$ takie, że 
+\begin{equation} \label{eq:1}
+	a_i \geq \max_{u \in L}|\{v \in \Sigma^{i}_m | uv = bf, f \in F, s_f = i \}|
+\end{equation}
+
+Rozważmy formalny szereg potęgowy $P(x) = 1 - mx + \Sigma_{i\geq 1} a_i x^i$. Jeżeli $P(x)$ ma dodatni rzeczywisty pierwiastek $x_0$, to $n_i \geq x_0^{i-1}$ dla każdego $i\geq 0$.
+
+Przekształćmy $P(x) = 1 - mx_0 + \Sigma_{i\geq 1} a_i x_0^i = 0$ jako
+
+\begin{equation} \label{eq:2}
+m - \Sigma_{i\geq 1} a_i x_0^{i-1} = x_0^{-1}
+\end{equation}
+
+Jako, że $n_0=1$, wykażemy przez indukcję, że $\frac{n_i}{n_{i-1}} \geq x_0^{-1}$ po to, by pokazać, że $n_i \geq x_0^{-i}$ dla każdego $i \geq 0$. Używając \autoref{eq:2}, widać że w przypadku początkowym $\frac{n_1}{n_0} = n_1 = m \geq x_0^{-1}$. Idąc dalej, dla każdego $i \geq 1$ jest:
+\begin{itemize}
+\item $m^i słów w \Sigma^{i}_m$
+\item $n^i słów w L$
+\item co najwyżej $\Sigma_{1\leq j\leq i} n_{i-j} a_j$ słów w $L'$
+\item $m(m^{i-1} - n_{i-1})$ słów w $\Sigma^{i}_m \setminus {L \cup L'}$
+\end{itemize}
+
+Stąd widać, że $n_i + \Sigma_{1\leq j\leq i} n_j a_{i-j} + m(m^{i-1} - n_{i-1}) \geq m^i$, więc $n_i \geq mn_{i-1} - \Sigma_{1\leq j\leq i} n_{i-j} a_j$.
+
+\begin{equation}
+\begin{split}
+\frac{n_i}{n_{i=1}} & \geq m - \Sigma_{1\leq j\leq i} a_{j} \frac{n_{i-j}}{n_{i-1}} \\
+& \geq m - \Sigma_{1\leq j\leq i} a_{j} x_0^{j-1} \\
+& \geq m - \Sigma_{j \geq 1} a_{j} x_0^{j-1} \\
+& = x_0^{-1}
+\end{split}
+\end{equation}
+
+Teraz pokażemy jak za pomocą zdefiniowanej metody używać do unikania ciasnych bliźniaków. \textit{q-prefiksem} (odp. \textit{1-sufiksem}) słowa nazywamy jego prefiks (odp. sufiks) o długości $q$. Ciasny bliźniak nazywany jest \textit{minimalnym}, jeśli nie zawiera krótszych ciasnych bliźniaków jako podciągów. Ciasny bliźniak jest \textit{mały}, jeśli jego długość to 2 i \textit{duży} jeśli jest dłuższy. Zbiór $F$ zabronionych podciągów zawiera każdy minimalny ciasny bliźniak. Definiujemy $s_f 1$ jeśli $f \in F$ jest mały i $s_f = |f| - 2$ jeśli nie jest.
+\\
+Ustalamy $a_1 = 1$, ponieważ $s_f=1$ tylko dla małych ciasnych bliźniaków i istnieje tylko jeden sposób na rozszerzenie prefiksu o jedną literę tak, aby uzyskać sufiks $xx$ z $x \in \Sigma_m$. Aby uzyskać rozsądną górną granicę $a_t$ dla $t \geq 2$, musimy ograniczyć liczbę dużych minimalnych ciasnych bliźniaków. Dla każdego ciasnego bliźniaka $f$ słowa $w$ o długości $i$, definiujemy $funkcję \; wysokości \; h: \; [0,\cdots,2i] \rightarrow \mathbb{Z}$ zdefiniowaną następująco:
+\begin{itemize}
+\item $h(0) = 0$
+\item Dla $0\leq j \leq 2i, h(j) = h(j-1) + 1$ jeśli j-ta litera $f$ należy do podsłowa $w$ zawierającego pierwszą literę $f$ i $h(j) = h(j-1) -1$ jeśli jest przeciwnie.
+\end{itemize}
+
+Jako, że $f$ jest ciasnym bliźniakiem, mamy $h(2i) = 0)$. Co więcej, jeśli $h(j) = 0$ dla niektórych $0 \leq j \leq 2i$, wtedy prefiks długości $j$ słowa $f$ jest ciasnym bliźniakiem. Wiec, jeśli $h$ jest wartością funkcji wysokości minimalnego ciasnego bliźniaka, wtedy $h(j)>0$ dla każdego $0 \leq j \leq 2i$. Stąd wysokość każdego minimalnego bliźniaka jest związana z unikalnym słowem Dyck'a o długości $2i-2$. Stąd, liczba funkcji wysokości jest co najwyżej równa $\frac{(2i - 2)!}{i!(i-1)!}$. Zgodnie z \autoref{eq:1} musimy ograniczyć liczbę rozwiązań $uv=bf$ takich, że $u$ jest ustalone i $|v| = s_f = |f| -2 = 2i - 2$. 2-prefiks słowa $f$ jest ustalony, jako że odpowiada 2-sufiksowi u. Zauważmy, że 2-prefiks dużego minimalnego ciasnego bliźniaka słowa $w$ jest równy 2-prefiksowi $w$, więc 2-prefiks $w$ także jest ustalony. Stąd, jest co najwyżej $m^{i-2}$ możliwości $w$. Jako, że $f$ jest wyznaczone przez $w$ i jego funkcję wysokości, istnieje co najwyżej $m^(i-2)\frac{(2i - 2)!}{i!(i-1)!}$ możliwości słowa $f$. Ustawmy więc $a_{2i-2} = m^{i-2}\frac{(2i - 2)!}{i!(i-1)!}$ i rozważmy wielomian
+\begin{equation}
+\begin{split}
+P(x) & = 1 - mx + x + \Sigma_{i \geq 2} m^(i-2)\frac{(2i - 2)!}{i!(i-1)!} x^{2i-2} \\
+& = 1 - (m-1)x + \Big(\frac{2x}{1+ \sqrt{1-4mx^2}} \Big)^2
+\end{split}
+\end{equation}
+
+Dla $m=6$, $P(x)$ nie ma dodatniego pierwiastka. Dla m=7, mamy $P(x_0)=0$ z $x_0=0.1788487593\cdots$. Więc istnieje co najmniej $\alpha^b$ słow długości $n$ nad $\Sigma_7$, które nie zawierają ciasnych bliźniaków, gdzie $\alpha = x_0^{-1} = 5.5913163944\cdots$.
+
+\end{proof}
 \end{theorem}
 
-\begin{theorem}
-Dla każdego $k$ istnieje funkcja $f(k)$, taka że
-dla dowolnej sekwencji list, każda o długości $f(k)$
-możliwe jest wybranie $k-wolnej-trioli$ z tych list.
-
-\end{theorem}
-
+\begin{thebibliography}{4}
+%
+\bibitem{grytczuk}
+J. Grytczuk, J. Kozik and B. Zaleski
+\textsl{Avoiding tight twins in sequences via
+entropy compression}
+\bibitem{short_proof}
+Guillaume Guegan and Pascal Ochem
+\textsl{A short proof that shuffle squares are
+7-avoidable}
+\bibitem{thue}
+J. Berstel
+\textsl{Axel Thueís papers on repetitions in words: a translation}
+\end{thebibliography}
 \end{document}
