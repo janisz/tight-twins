@@ -10,7 +10,7 @@ namespace Twins.Model
         /// </summary>
         public bool IsSelected { get; set; }
         /// <summary>
-        /// Indeks w słowie
+        /// Indeks w słowie liczony od 1
         /// </summary>
         public int Value { get; set; }
         /// <summary>

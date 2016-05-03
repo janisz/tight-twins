@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Twins.Model;
 
 namespace Twins
@@ -10,38 +11,44 @@ namespace Twins
         /// </summary>
         /// <param name="boardItems"></param>
         /// <returns></returns>
-        public static bool CheckTwins(IEnumerable<BoardItem> boardItems)
+        public static bool CheckTwins(ICollection<BoardItem> boardItems)
         {
-            // TODO: Zamienić IEnumerable na IList
-            int count = 0;
-            foreach (var item in boardItems)
-            {
-                count++;
-            }
-            string[] board = new string[count];
-            foreach (var item in boardItems)
-            {
-                board[item.Value] = item?.Color.ToString() ?? "";
-            }
-            return findTwins(System.String.Join("", board)).Length != 0;
+            var board = boardItems
+                .Where(item => item.Color != null)
+                .OrderBy(item => item.Value)
+                .Select(item => item.Color ?? 0)
+                .ToArray();
+
+            return CheckTwins(board);
         }
 
-        /// <summary>
-        /// Zwraca najkrótszego istniejącego ciasnego bliżniaka
-        /// </summary>
-        /// <param name="sequence">słowo nad alfabetem</param>
-        /// <returns>Najkrótszy istnijący ciasny bliźniak lub pusty jeśli nie znaleziono</returns>
-        private static string findTwins(string sequence) {
-            for (int subSequenceLength = 1; subSequenceLength <= sequence.Length / 2; subSequenceLength++) {
-                for (int index = 0; index + 2*subSequenceLength <= sequence.Length; index++) {
-                    string a = sequence.Substring(index, subSequenceLength);
-                    string b = sequence.Substring(index+subSequenceLength, subSequenceLength);
-                    if (a == b) {
-                        return a;
+        private static bool CheckTwins(int[] sequence)
+        {
+            for (int subSequenceLength = 1; subSequenceLength <= sequence.Length / 2; subSequenceLength++)
+            {
+                for (int index = 0; index + 2 * subSequenceLength <= sequence.Length; index++)
+                {
+                    if (sequence.CheckTightTwins(index, subSequenceLength))
+                    {
+                        return true;   
                     }
                 }
             }
-            return "";
+            return false;
+        }
+    }
+     public static class ArrayExtensions
+     {
+        public static bool CheckTightTwins(this int[] sequence, int index, int subSequenceLength)
+        {
+            for (int i = 0; i < subSequenceLength; i++)
+            {
+                if (sequence[index + i] != sequence[subSequenceLength + index + i])
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
