@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Twins.Model;
 
 namespace Twins.Players
 {
@@ -13,19 +14,12 @@ namespace Twins.Players
             await Task.Delay(viewModel.MoveDelay * 1000);
 
             //Losowy wybór
-            var fieldsLeftCount = viewModel.BoardItems.Count(p => p.Color == null);
-            var position = _random.Next(fieldsLeftCount);
+            var fieldsLeftCount = viewModel.BoardSize - viewModel.BoardItems.Count();
+            var position = _random.Next(viewModel.BoardItems.Count());
 
-            for (int i = 0, j = 0; i < viewModel.BoardItems.Count; ++i)
-                if (viewModel.BoardItems[i].Color == null)
-                {
-                    if (j == position)
-                    {
-                        viewModel.SelectedBoardItem = viewModel.BoardItems[i];
-                        return;
-                    }
-                    ++j;
-                }
+            var item = new BoardItem() { Value = viewModel.BoardItems.Count() };
+            viewModel.BoardItems.Insert(position, item);
+            viewModel.SelectedBoardItem = item;
         }
     }
 }

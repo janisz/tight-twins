@@ -14,8 +14,6 @@ namespace Twins
         public static bool CheckTwins(ICollection<BoardItem> boardItems)
         {
             var board = boardItems
-                .Where(item => item.Color != null)
-                .OrderBy(item => item.Value)
                 .Select(item => item.Color ?? 0)
                 .ToArray();
 

@@ -4,6 +4,8 @@ using PropertyChanged;
 using Twins.Helpers;
 using Twins.Model;
 using Twins.Players;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Twins
 {
@@ -113,7 +115,7 @@ namespace Twins
         public void OnBoardSizeChanged()
         {
             var integerList = Enumerable.Range(1, BoardSize);
-            var items = integerList.Select(i => new BoardItem { Value = i }).ToList();
+            var items = new List<BoardItem>();
             BoardItems = new ObservableCollection<BoardItem>(items);
         }
 
