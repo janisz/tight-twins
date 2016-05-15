@@ -22,6 +22,7 @@ namespace Twins
             MessageBoxService = new MessageBoxService();
             GameStarted = false;
             MoveDelay = 1;
+            BoardItems = new ObservableCollection<BoardItem>(new List<BoardItem>());
         }
         public IMessageBoxService MessageBoxService { get; private set; }
         public bool GameStarted { get; set; }
@@ -42,7 +43,9 @@ namespace Twins
         public BoardItem SelectedBoardItem { get; set; }
         public Color SelectedColor { get; set; }
         public ObservableCollection<BoardItem> BoardItems { get; set; }
-        public int CurrentRound { get; set; }
+        public int CurrentRound { get {
+             return BoardItems.Count();
+        } }
         public Turn CurrentTurn { get; set; }
         public int MoveDelay { get; set; }
         public IPlayer FirstPlayer { get; set; }
@@ -73,7 +76,6 @@ namespace Twins
                 return;
             }
 
-            ++CurrentRound;
             CurrentTurn = Turn.First;
 
             await FirstPlayer.Move(this);
@@ -96,11 +98,9 @@ namespace Twins
         public async void StartGame()
         {
             GameStarted = true;
-            CurrentRound = 0;
             InitialCheck();
             SetupVersion();
             CurrentTurn = Turn.First;
-            ++CurrentRound;
             await FirstPlayer.Move(this);
             SelectedBoardItem.IsSelected = true;
         }
@@ -114,9 +114,7 @@ namespace Twins
 
         public void OnBoardSizeChanged()
         {
-            var integerList = Enumerable.Range(1, BoardSize);
-            var items = new List<BoardItem>();
-            BoardItems = new ObservableCollection<BoardItem>(items);
+            var integerList = Enumerable.Range(1, BoardSize);            
         }
 
         /// <summary>
