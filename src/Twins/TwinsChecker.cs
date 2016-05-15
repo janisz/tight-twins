@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Twins.Model;
 
@@ -11,20 +12,11 @@ namespace Twins
         /// </summary>
         /// <param name="boardItems"></param>
         /// <returns></returns>
-        public static bool CheckTwins(ICollection<BoardItem> boardItems)
+        public static bool CheckTwins(Collection<BoardItem> sequence)
         {
-            var board = boardItems
-                .Select(item => item.Color ?? 0)
-                .ToArray();
-
-            return CheckTwins(board);
-        }
-
-        private static bool CheckTwins(int[] sequence)
-        {
-            for (int subSequenceLength = 1; subSequenceLength <= sequence.Length / 2; subSequenceLength++)
+            for (int subSequenceLength = 1; subSequenceLength <= sequence.Count / 2; subSequenceLength++)
             {
-                for (int index = 0; index + 2 * subSequenceLength <= sequence.Length; index++)
+                for (int index = 0; index + 2 * subSequenceLength <= sequence.Count; index++)
                 {
                     if (sequence.CheckTightTwins(index, subSequenceLength))
                     {
@@ -37,11 +29,11 @@ namespace Twins
     }
      public static class ArrayExtensions
      {
-        public static bool CheckTightTwins(this int[] sequence, int index, int subSequenceLength)
+        public static bool CheckTightTwins(this Collection<BoardItem> sequence, int index, int subSequenceLength)
         {
             for (int i = 0; i < subSequenceLength; i++)
             {
-                if (sequence[index + i] != sequence[subSequenceLength + index + i])
+                if (sequence[index + i].Color != sequence[subSequenceLength + index + i].Color)
                 {
                     return false;
                 }

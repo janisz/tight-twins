@@ -13,6 +13,7 @@ namespace Twins
             InitializeComponent();
             MainViewModel = new MainViewModel();
             DataContext = MainViewModel;
+            BindVersionComboBox();
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -24,6 +25,11 @@ namespace Twins
         {
             MainViewModel = new MainViewModel();
             DataContext = MainViewModel;
+        }
+
+        private void BindVersionComboBox()
+        {
+            versionComboBox.ItemsSource = new string[] { "Komputer vs. Człowiek", "Komputer II vs. Człowiek", "Komputer vs. Komputer", "Komputer II vs. Komputer II" };
         }
     }
 }

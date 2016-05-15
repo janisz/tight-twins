@@ -21,8 +21,7 @@ namespace Twins
         {
             MessageBoxService = new MessageBoxService();
             GameStarted = false;
-            MoveDelay = 1;
-            BoardItems = new ObservableCollection<BoardItem>(new List<BoardItem>());
+            SetDefaultValues();
         }
         public IMessageBoxService MessageBoxService { get; private set; }
         public bool GameStarted { get; set; }
@@ -126,30 +125,35 @@ namespace Twins
 
         private void SetupVersion()
         {
-            if (Version == null || Version == "B")
+            if (Version == "Komputer vs. Człowiek")
             {
-                Version = "B";
                 FirstPlayer = new FirstPlayer();
                 SecondPlayer = new HumanPlayer();
             }
-            else if (Version == "C")
+            else if (Version == "Komputer II vs. Człowiek")
             {
-                Version = "C";
                 FirstPlayer = new FirstPlayer();
                 SecondPlayer = new SecondPlayer();
             }
-            else if(Version == "B2")
+            else if (Version == "Komputer vs. Komputer")
             {
-                Version = "B2";
                 FirstPlayer = new BetterFirstPlayer();
                 SecondPlayer = new HumanPlayer();
             }
             else
             {
-                Version = "C2";
                 FirstPlayer = new BetterFirstPlayer();
                 SecondPlayer = new BetterSecondPlayer();
             }
+        }
+
+        private void SetDefaultValues()
+        {
+            BoardItems = new ObservableCollection<BoardItem>(new List<BoardItem>());
+            MoveDelay = 1;
+            Version = "Komputer vs. Człowiek";
+            BoardSize = 10;
+            ColorsCount = 3;
         }
     }
 }

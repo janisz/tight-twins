@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="{Binding CurrentTurn, Converter={StaticResource CurrentTurnToTitleConverter}}" Height="350" Width="650">
+        Title="{Binding CurrentTurn, Converter={StaticResource CurrentTurnToTitleConverter}}" Height="350" Width="750">
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal">
@@ -13,7 +13,13 @@
                 <Label Content="Rozmiar alfabetu"/>
                 <TextBox Width="25" Text="{Binding ColorsCount}"/>
                 <Label>Wersja</Label>
-                <TextBox Width="25" Text="{Binding Version}"/>
+                <ComboBox Name="versionComboBox" SelectedItem="{Binding Version}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                                <TextBlock Text="{Binding }"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
                 <Label>Opóźnienie (sek)</Label>
                 <TextBox Width="25" Text="{Binding MoveDelay}"/>
                 <Label Content="Gracz 1"/>
