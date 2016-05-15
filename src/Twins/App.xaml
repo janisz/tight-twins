@@ -8,5 +8,6 @@
         <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
         <converters:BoolToBorderColourConverter x:Key="BoolToBorderColourConverter" />
         <converters:CurrentTurnToTitleConverter x:Key="CurrentTurnToTitleConverter" />
+        <converters:TwinNumberToColorConverter x:Key="TwinNumberToColorConverter" />
     </Application.Resources>
 </Application>

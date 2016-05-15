@@ -61,6 +61,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\TwinNumberToColorConverter.cs" />
     <Compile Include="Players\BetterFirstPlayer.cs" />
     <Compile Include="Players\BetterSecondPlayer.cs" />
     <Compile Include="Players\HumanPlayer.cs" />

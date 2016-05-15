@@ -38,6 +38,12 @@ namespace Twins
                     return false;
                 }
             }
+
+
+            for (int i = index; i < subSequenceLength * 2; i++)
+            {
+                sequence[i].TwinIndex = 0;
+            }
             return true;
         }
     }

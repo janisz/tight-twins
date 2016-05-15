@@ -38,7 +38,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border BorderThickness="1" BorderBrush="{Binding IsSelected, Converter={StaticResource BoolToBorderColourConverter}}">
-                            <StackPanel>
+                            <StackPanel Background="{Binding TwinIndex, Converter={StaticResource TwinNumberToColorConverter}}">
                                 <Ellipse Width="30"
                                          Height="30"
                                          Stroke="Black"

@@ -17,5 +17,9 @@ namespace Twins.Model
         /// Znak z alfabetu
         /// </summary>
         public int? Color { get; set; }
+        /// <summary>
+        /// Numer bliźniaka 0/1
+        /// </summary>
+        public int? TwinIndex { get; set; }
     }
 }
