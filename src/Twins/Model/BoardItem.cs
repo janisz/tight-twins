@@ -21,5 +21,15 @@ namespace Twins.Model
         /// Numer bliźniaka 0/1
         /// </summary>
         public int? TwinIndex { get; set; }
+
+        public static bool operator ==(BoardItem a, BoardItem b)
+        {
+            return a.Color == b.Color;
+        }
+
+        public static bool operator !=(BoardItem a, BoardItem b)
+        {
+            return !(a == b);
+        }
     }
 }
