@@ -91,6 +91,10 @@ namespace Twins
             List<BoardItem> list = source.ToList();
             int length = list.Count;
 
+            if (length > maxLenght) {
+                throw new ArgumentOutOfRangeException("length", length, "Lenght must be less than " + maxLenght);
+            }
+
             foreach (int count in onesCount.Where(ones => ones == length / 2))
             {
                 List<BoardItem> first = new List<BoardItem>();
