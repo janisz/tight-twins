@@ -22,11 +22,11 @@ namespace Twins.Model
         /// </summary>
         public int? TwinIndex { get; set; }
 
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
            if (obj == null || GetType() != obj.GetType()) return false;
            BoardItem b = (BoardItem)obj;
-           return a.Color == b.Color;
+           return Color == b.Color;
         }
     }
 }
