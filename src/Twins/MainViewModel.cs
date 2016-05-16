@@ -132,13 +132,13 @@ namespace Twins
             }
             else if (Version == "Komputer II vs. Człowiek")
             {
-                FirstPlayer = new FirstPlayer();
-                SecondPlayer = new SecondPlayer();
+                FirstPlayer = new BetterFirstPlayer();
+                SecondPlayer = new HumanPlayer();
             }
             else if (Version == "Komputer vs. Komputer")
             {
-                FirstPlayer = new BetterFirstPlayer();
-                SecondPlayer = new HumanPlayer();
+                FirstPlayer = new FirstPlayer();
+                SecondPlayer = new SecondPlayer();
             }
             else
             {
