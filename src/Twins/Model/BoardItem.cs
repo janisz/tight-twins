@@ -22,14 +22,11 @@ namespace Twins.Model
         /// </summary>
         public int? TwinIndex { get; set; }
 
-        public static bool operator ==(BoardItem a, BoardItem b)
+        public override bool Equals(Object obj)
         {
-            return a.Color == b.Color;
-        }
-
-        public static bool operator !=(BoardItem a, BoardItem b)
-        {
-            return !(a == b);
+           if (obj == null || GetType() != obj.GetType()) return false;
+           BoardItem b = (BoardItem)obj;
+           return a.Color == b.Color;
         }
     }
 }

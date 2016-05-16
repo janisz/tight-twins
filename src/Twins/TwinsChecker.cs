@@ -56,7 +56,7 @@ namespace Twins
                     y.MoveNext();
                     foreach (var x in pair.Item1)
                     {
-                        if (x != y.Current)
+                        if (!x.Equals(y.Current))
                         {
                             equal = false;
                             break;
