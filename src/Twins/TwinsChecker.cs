@@ -22,7 +22,7 @@ namespace Twins
                     if (sequence.CheckTightTwins(startIndex, n))
                     {
                         return true;
-                    }                   
+                    }
                 }
             }
             return false;
@@ -30,6 +30,16 @@ namespace Twins
     }
      public static class ArrayExtensions
      {
+         private const int maxLenght = 100;
+         private static readonly int[] onesCount = new int[maxLenght];
+
+         static ArrayExtensions() {
+             for (int i=0;i<100;i++)
+             {
+                 onesCount[i] = Convert.ToString(i, 2).Split('1').Length - 1;
+             }
+         }
+
         public static bool CheckTightTwins(this Collection<BoardItem> sequence, int index, int subSequenceLength)
         {
             for (int i = index; i < sequence.Count - subSequenceLength; i++)
@@ -53,8 +63,8 @@ namespace Twins
                         }
                         y.MoveNext();
                     }
-                   
-                    if (equal) 
+
+                    if (equal)
                     {
                         foreach (var item in sequence)
                         {
@@ -80,9 +90,8 @@ namespace Twins
         {
             List<BoardItem> list = source.ToList();
             int length = list.Count;
-            int max = (int)Math.Pow(2, list.Count);
 
-            for (int count = 0; count < max; count++)
+            foreach (int count in onesCount.Where(ones => ones == length / 2))
             {
                 List<BoardItem> first = new List<BoardItem>();
                 List<BoardItem> second = new List<BoardItem>();
