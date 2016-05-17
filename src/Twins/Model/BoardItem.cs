@@ -28,5 +28,9 @@ namespace Twins.Model
            BoardItem b = (BoardItem)obj;
            return Color == b.Color;
         }
+   
+        public override int GetHashCode() {
+            return ((this.Value * 251) + this.Color ?? 0) * 251 + this.TwinIndex ?? 0;
+        }
     }
 }

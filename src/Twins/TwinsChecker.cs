@@ -13,7 +13,7 @@ namespace Twins
         /// </summary>
         /// <param name="boardItems"></param>
         /// <returns></returns>
-        public static bool CheckTwins(Collection<BoardItem> sequence)
+        public static bool CheckTwins(ICollection<BoardItem> sequence)
         {
             for (int n = 2; n <= sequence.Count; n += 2)
             {
@@ -40,7 +40,7 @@ namespace Twins
              }
          }
 
-        public static bool CheckTightTwins(this Collection<BoardItem> sequence, int index, int subSequenceLength)
+        public static bool CheckTightTwins(this ICollection<BoardItem> sequence, int index, int subSequenceLength)
         {
             for (int i = index; i < sequence.Count - subSequenceLength; i++)
             {
