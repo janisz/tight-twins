@@ -37,12 +37,12 @@ namespace Twins
 
     public static class ArrayExtensions
     {
-        private const int maxLenght = 100;
+        private const int maxLenght = 40030;
         private static readonly int[] onesCount = new int[maxLenght];
 
         static ArrayExtensions()
         {
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < maxLenght; i++)
             {
                 onesCount[i] = Convert.ToString(i, 2).Split('1').Length - 1;
             }
