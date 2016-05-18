@@ -1,14 +1,22 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Twins.Model;
 
 namespace Twins.Players
 {
-    public class BetterFirstPlayer : FirstPlayer
+    public class BetterFirstPlayer : IPlayer
     {
-        public new Task Move(MainViewModel viewModel)
+        public async Task Move(MainViewModel viewModel)
         {
-            //TODO: właściwa implementacja
+            await Task.Delay(viewModel.MoveDelay * 1000);
 
-            return base.Move(viewModel);
+            var fieldsLeftCount = viewModel.BoardSize - viewModel.BoardItems.Count();
+            var position = viewModel.BoardItems.Count() / 2;
+
+            var item = new BoardItem() { Value = viewModel.BoardItems.Count() };
+            viewModel.BoardItems.Insert(position, item);
+            viewModel.SelectedBoardItem = item;
         }
     }
 }

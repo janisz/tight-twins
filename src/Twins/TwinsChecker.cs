@@ -28,24 +28,25 @@ namespace Twins
             return false;
         }
     }
-     public static class ArrayExtensions
-     {
-         private const int maxLenght = 100;
-         private static readonly int[] onesCount = new int[maxLenght];
+    public static class ArrayExtensions
+    {
+        private const int maxLenght = 100;
+        private static readonly int[] onesCount = new int[maxLenght];
 
-         static ArrayExtensions() {
-             for (int i=0;i<100;i++)
-             {
-                 onesCount[i] = Convert.ToString(i, 2).Split('1').Length - 1;
-             }
-         }
+        static ArrayExtensions()
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                onesCount[i] = Convert.ToString(i, 2).Split('1').Length - 1;
+            }
+        }
 
         public static bool CheckTightTwins(this ICollection<BoardItem> sequence, int index, int subSequenceLength)
         {
             for (int i = index; i < sequence.Count - subSequenceLength; i++)
             {
                 var subsets = Subsets(sequence.Skip(i).Take(subSequenceLength));
-                foreach ( var pair in subsets)
+                foreach (var pair in subsets)
                 {
                     if (pair.Item1.Count() != subSequenceLength / 2)
                     {
@@ -91,11 +92,12 @@ namespace Twins
             List<BoardItem> list = source.ToList();
             int length = list.Count;
 
-            if (length > maxLenght) {
+            if (length > maxLenght)
+            {
                 throw new ArgumentOutOfRangeException("length", length, "Lenght must be less than " + maxLenght);
             }
 
-            foreach (int count in onesCount.Where(ones => ones == length / 2))
+            foreach (int count in NumbersWithOnes(length / 2))
             {
                 List<BoardItem> first = new List<BoardItem>();
                 List<BoardItem> second = new List<BoardItem>();
@@ -113,6 +115,16 @@ namespace Twins
                     rs++;
                 }
                 yield return new Tuple<IEnumerable<BoardItem>, IEnumerable<BoardItem>>(first, second);
+            }
+        }
+        private static IEnumerable<int> NumbersWithOnes(int n)
+        {
+            for (int i = 0; i < onesCount.Length; i++)
+            {
+                if (onesCount[i] == n)
+                {
+                    yield return i;
+                }
             }
         }
     }
