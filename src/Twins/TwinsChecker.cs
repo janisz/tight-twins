@@ -70,22 +70,10 @@ namespace Twins
                             break;
                         }
                         y.MoveNext();
-                    }
+                    }                    
 
                     if (equal)
                     {
-                        foreach (var item in sequence)
-                        {
-                            item.TwinIndex = null;
-                        }
-                        foreach (var item in pair.Item1)
-                        {
-                            item.TwinIndex = 0;
-                        }
-                        foreach (var item in pair.Item2)
-                        {
-                            item.TwinIndex = 1;
-                        }
                         return pair;
                     }
                 }
