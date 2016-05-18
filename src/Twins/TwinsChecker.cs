@@ -15,19 +15,26 @@ namespace Twins
         /// <returns></returns>
         public static bool CheckTwins(ICollection<BoardItem> sequence)
         {
+            return FindTightTwins(sequence) != null;
+        }
+
+        public static Tuple<IEnumerable<BoardItem>, IEnumerable<BoardItem>> FindTightTwins(ICollection<BoardItem> sequence)
+        {
             for (int n = 2; n <= sequence.Count; n += 2)
             {
                 for (int startIndex = 0; startIndex < sequence.Count - n; startIndex++)
                 {
-                    if (sequence.CheckTightTwins(startIndex, n))
+                    var twins = sequence.CheckTightTwins(startIndex, n);
+                    if (twins != null)
                     {
-                        return true;
+                        return twins;
                     }
                 }
             }
-            return false;
+            return null;
         }
     }
+
     public static class ArrayExtensions
     {
         private const int maxLenght = 100;
@@ -41,7 +48,7 @@ namespace Twins
             }
         }
 
-        public static bool CheckTightTwins(this ICollection<BoardItem> sequence, int index, int subSequenceLength)
+        public static Tuple<IEnumerable<BoardItem>, IEnumerable<BoardItem>> CheckTightTwins(this ICollection<BoardItem> sequence, int index, int subSequenceLength)
         {
             for (int i = index; i < sequence.Count - subSequenceLength; i++)
             {
@@ -79,12 +86,12 @@ namespace Twins
                         {
                             item.TwinIndex = 1;
                         }
-                        return true;
+                        return pair;
                     }
                 }
             }
 
-            return false;
+            return null;
         }
 
         public static IEnumerable<Tuple<IEnumerable<BoardItem>, IEnumerable<BoardItem>>> Subsets(IEnumerable<BoardItem> source)
