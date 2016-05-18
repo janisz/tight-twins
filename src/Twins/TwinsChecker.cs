@@ -22,7 +22,7 @@ namespace Twins
         {
             for (int n = 2; n <= sequence.Count; n += 2)
             {
-                for (int startIndex = 0; startIndex < sequence.Count - n; startIndex++)
+                for (int startIndex = 0; startIndex <= sequence.Count - n; startIndex++)
                 {
                     var twins = sequence.CheckTightTwins(startIndex, n);
                     if (twins != null)
@@ -50,7 +50,7 @@ namespace Twins
 
         public static Tuple<IEnumerable<BoardItem>, IEnumerable<BoardItem>> CheckTightTwins(this ICollection<BoardItem> sequence, int index, int subSequenceLength)
         {
-            for (int i = index; i < sequence.Count - subSequenceLength; i++)
+            for (int i = index; i <= sequence.Count - subSequenceLength; i++)
             {
                 var subsets = Subsets(sequence.Skip(i).Take(subSequenceLength));
                 foreach (var pair in subsets)
