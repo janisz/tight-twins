@@ -8,6 +8,8 @@ namespace Twins
 {
     public class TwinsChecker
     {
+        static Dictionary<string, bool> Cache = new Dictionary<string,bool>(1000);
+
         /// <summary>
         /// Zwraca prawdę jeśli istnieją ciasne bliźniaki
         /// </summary>
@@ -15,7 +17,20 @@ namespace Twins
         /// <returns></returns>
         public static bool CheckTwins(ICollection<BoardItem> sequence)
         {
-            return FindTightTwins(sequence) != null;
+            var sequenceString = SequenceToString(sequence);
+            if (Cache.ContainsKey(sequenceString))
+            {
+                return Cache[sequenceString];
+            }
+            var result = FindTightTwins(sequence) != null;
+
+            Cache[sequenceString] = result;
+            return result;
+        }
+
+        public static string SequenceToString(ICollection<BoardItem> sequence)
+        {
+            return string.Join(" ", sequence.Select(x => x.Color.ToString()));
         }
 
         public static Tuple<IEnumerable<BoardItem>, IEnumerable<BoardItem>> FindTightTwins(ICollection<BoardItem> sequence)

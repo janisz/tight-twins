@@ -1,4 +1,5 @@
 ﻿using PropertyChanged;
+using System;
 
 namespace Twins.Model
 {
@@ -31,6 +32,11 @@ namespace Twins.Model
    
         public override int GetHashCode() {
             return ((this.Value * 251) + this.Color ?? 0) * 251 + this.TwinIndex ?? 0;
+        }
+
+        public BoardItem() { }
+        public BoardItem(int? color) {
+            this.Color = color;
         }
     }
 }
