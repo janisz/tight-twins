@@ -48,11 +48,11 @@ namespace Twins
             }
             return null;
         }
-    }
+    }    
 
     public static class ArrayExtensions
     {
-        private const int maxLenght = 40030;
+        private const int maxLenght = 123456;
         private static readonly int[] onesCount = new int[maxLenght];
 
         static ArrayExtensions()
