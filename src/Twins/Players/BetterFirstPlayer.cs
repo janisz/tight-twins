@@ -21,19 +21,19 @@ namespace Twins.Players
         }
 
        
-        struct FirstPlayerMove
+        public struct FirstPlayerMove
         {
             public int color;
             public int rank;
         }
 
-        struct SecondPlayerMove
+        public struct SecondPlayerMove
         {
             public int position;
             public int rank;
         }
 
-        private FirstPlayerMove MaxMove(List<BoardItem> board, int position, int colorCount, int maxSize)
+        static public FirstPlayerMove MaxMove(List<BoardItem> board, int position, int colorCount, int maxSize)
         {
             if (TwinsChecker.CheckTwins(board))
             {
@@ -69,7 +69,7 @@ namespace Twins.Players
             return bestMove;
         }
 
-        private SecondPlayerMove MinMove(List<BoardItem> board, int colorCount, int maxSize)
+        static public SecondPlayerMove MinMove(List<BoardItem> board, int colorCount, int maxSize)
         {
             if (board.Count() == maxSize || TwinsChecker.CheckTwins(board))
             {

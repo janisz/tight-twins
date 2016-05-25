@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Twins.Model;
+using Twins.Players;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Twins
@@ -37,8 +38,19 @@ namespace Twins
             CollectionAssert.AreEqual(new[] { 0 }, twin4a);
             CollectionAssert.AreEqual(new[] { 1 }, twin4b);
         }
+        
+        [TestMethod]
+        public void CheckBeterFirstPlayerMove()
+        {
+            //TODO: Test interface not helper methods
+            var move = BetterFirstPlayer.MinMove(Sequence("02012"), 3, 7);
+            Assert.AreEqual(1, move.position);
+            move = BetterFirstPlayer.MinMove(Sequence("01202"), 3, 7);
+            Assert.AreEqual(4, move.position);
+        }
+        
 
-        public static ICollection<BoardItem> Sequence(string seq)
+        public static List<BoardItem> Sequence(string seq)
         {
             return seq.ToArray().Select((color, index) => new BoardItem() { Color = Convert.ToInt32(color.ToString()), Value = index }).ToList();
         }
