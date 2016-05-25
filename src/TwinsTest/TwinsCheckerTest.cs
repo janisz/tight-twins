@@ -38,7 +38,7 @@ namespace Twins
             CollectionAssert.AreEqual(new[] { 0 }, twin4a);
             CollectionAssert.AreEqual(new[] { 1 }, twin4b);
         }
-        
+
         [TestMethod]
         public void CheckBeterFirstPlayerMove()
         {
@@ -46,9 +46,8 @@ namespace Twins
             var move = BetterFirstPlayer.MinMove(Sequence("02012"), 3, 7);
             Assert.AreEqual(1, move.position);
             move = BetterFirstPlayer.MinMove(Sequence("01202"), 3, 7);
-            Assert.AreEqual(4, move.position);
+            Assert.AreEqual(2, move.position);
         }
-        
 
         public static List<BoardItem> Sequence(string seq)
         {

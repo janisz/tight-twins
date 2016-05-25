@@ -20,7 +20,6 @@ namespace Twins.Players
             viewModel.SelectedBoardItem = item;
         }
 
-       
         public struct FirstPlayerMove
         {
             public int color;
@@ -40,9 +39,7 @@ namespace Twins.Players
                 // Should never happend
                 throw new Exception();
             }
-
-            FirstPlayerMove bestMove = new FirstPlayerMove() { rank = int.MinValue };
-                        
+            var bestMove = new FirstPlayerMove() { rank = int.MinValue };
             for (int color = 0; color < colorCount; color++)
             {
                 var newBoard = board.ConvertAll(_ => new BoardItem(_.Color)).ToList();
@@ -50,17 +47,21 @@ namespace Twins.Players
 
                 // Sprawdzamy czy gra się zakończyła
                 if (TwinsChecker.CheckTwins(newBoard)) // Są ciasne bliźniaki (przegrywamy)
-                {                    
-                    return new FirstPlayerMove() { color = color, rank = -1 };
+                {
+                    if (bestMove.rank < newBoard.Count)
+                    {
+                        bestMove = new FirstPlayerMove() { color = color, rank = newBoard.Count };
+                    }
                 }
-                else if (newBoard.Count() == maxSize) // Doszliśmy do końca (wygrywamy)
-                {                    
-                    return new FirstPlayerMove() { color = color, rank = 1 };
+                else if (newBoard.Count == maxSize) // Doszliśmy do końca (wygrywamy)
+                {
+                    return new FirstPlayerMove() { color = color, rank = int.MaxValue };
                 }
                 else // Gra się nie skończyła
                 {
+                    // Gra drugi gracz (maksymalizujemy)
                     SecondPlayerMove secondPlayerMove = MinMove(newBoard, colorCount, maxSize);
-                    if (bestMove.rank >= secondPlayerMove.rank)
+                    if (bestMove.rank < secondPlayerMove.rank)
                     {
                         bestMove = new FirstPlayerMove() { color = color, rank = secondPlayerMove.rank };
                     }
@@ -76,19 +77,17 @@ namespace Twins.Players
                 // Should never happend
                 throw new Exception();
             }
-
-            SecondPlayerMove bestMove = new SecondPlayerMove{ rank = int.MinValue };
-
-            for (int position = 0; position < board.Count; position++)
+            var bestMove = new SecondPlayerMove() { rank = int.MaxValue };
+            for (int position = 0; position <= board.Count; position++)
             {
                 var newBoard = board.ConvertAll(_ => new BoardItem(_.Color)).ToList();
                 //Wastawiamy element
                 var item = new BoardItem();
-                newBoard.Insert(position, item);                
+                newBoard.Insert(position, item);
 
-                // Gra pierwszy gracz
+                // Gra pierwszy gracz (minimalizujemy)
                 FirstPlayerMove firstPlayerMove = MaxMove(newBoard, position, colorCount, maxSize);
-                if (bestMove.rank <= firstPlayerMove.rank)
+                if (bestMove.rank > firstPlayerMove.rank)
                 {
                     bestMove = new SecondPlayerMove() { position = position, rank = firstPlayerMove.rank }; ;
                 }
