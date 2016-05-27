@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Twins.Helpers;
 using Twins.Model;
 
 namespace Twins.Players
 {
     public class BetterFirstPlayer : IPlayer
     {
-        private static readonly Random _random = new Random();
-
         static Dictionary<string, SecondPlayerMove> MinMoveCache = new Dictionary<string, SecondPlayerMove>(1000);
 
         public async Task Move(MainViewModel viewModel)
@@ -45,7 +44,7 @@ namespace Twins.Players
             }
             var bestMove = new FirstPlayerMove() { Rank = int.MinValue };
 
-            var colors = Enumerable.Range(0, colorCount).OrderBy(_ => _random.Next()).Take(5);
+            var colors = Enumerable.Range(0, colorCount);
             foreach(var color in colors)    
             {
                 var newBoard = board.ConvertAll(_ => new BoardItem(_.Color)).ToList();
@@ -85,7 +84,7 @@ namespace Twins.Players
             }
             var bestMove = new SecondPlayerMove() { Rank = int.MaxValue };
 
-            var positions = Enumerable.Range(0, board.Count).OrderBy(_ => _random.Next()).Take(5);
+            var positions = Enumerable.Range(0, board.Count);
             foreach(var position in positions)
             {
                 var newBoard = board.ConvertAll(_ => new BoardItem(_.Color)).ToList();

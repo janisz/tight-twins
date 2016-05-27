@@ -30,7 +30,7 @@ namespace Twins
 
         public static string SequenceToNormalizedString(ICollection<BoardItem> sequence)
         {
-            var colorMap = new Dictionary<int, int>(1000);
+            var colorMap = new Dictionary<int, int>(100);
 
             return string.Join(" ", sequence.Select(x => NormalizeColor(x.Color ?? -1, colorMap).ToString()));
         }
