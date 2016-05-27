@@ -10,6 +10,8 @@ namespace Twins.Players
     {
         private static readonly Random _random = new Random();
 
+        static Dictionary<string, SecondPlayerMove> MinMoveCache = new Dictionary<string, SecondPlayerMove>(1000);
+
         public async Task Move(MainViewModel viewModel)
         {
             await Task.Delay(viewModel.MoveDelay * 1000);
@@ -64,7 +66,7 @@ namespace Twins.Players
                 else // Gra się nie skończyła
                 {
                     // Gra drugi gracz (maksymalizujemy)
-                    SecondPlayerMove secondPlayerMove = MinMove(newBoard, colorCount, maxSize);
+                    SecondPlayerMove secondPlayerMove = MinMoveCached(newBoard, colorCount, maxSize);
                     if (bestMove.Rank < secondPlayerMove.Rank)
                     {
                         bestMove = new FirstPlayerMove() { Color = color, Rank = secondPlayerMove.Rank };
@@ -99,6 +101,25 @@ namespace Twins.Players
                 }
             }
             return bestMove;
+        }
+
+        public static SecondPlayerMove MinMoveCached(List<BoardItem> board, int colorCount, int maxSize)
+        {
+            var serialized = SerializeMinMoveParameters(board, colorCount, maxSize);
+
+            if (MinMoveCache.ContainsKey(serialized))
+            {
+                return MinMoveCache[serialized];
+            }
+
+            var minMove = MinMove(board, colorCount, maxSize);
+            MinMoveCache[serialized] = minMove;
+            return minMove;
+        }
+
+        public static string SerializeMinMoveParameters(List<BoardItem> board, int colorCount, int maxSize)
+        {
+            return string.Join(" ", board.Select(x => x.Color ?? -1).ToString()) + ", " + colorCount + ", " + maxSize;
         }
     }
 }
