@@ -60,10 +60,20 @@ namespace Twins
 
             SelectedBoardItem.Color = SelectedColor.Index;
 
-            var twinsExist = TwinsChecker.CheckTwins(BoardItems);
+            var twins = TwinsChecker.FindTightTwins(BoardItems);
 
-            if (twinsExist)
+            if (twins != null)
             {
+                foreach (var item in twins.Item1)
+                {
+                    item.TwinIndex = 0;
+                }
+
+                foreach (var item in twins.Item2)
+                {
+                    item.TwinIndex = 1;
+                }
+
                 MessageBoxService.ShowMessage("Blizniaki wygrały!", "");
                 GameStarted = false;
                 return;
@@ -132,13 +142,13 @@ namespace Twins
             }
             else if (Version == "Komputer II vs. Człowiek")
             {
-                FirstPlayer = new FirstPlayer();
-                SecondPlayer = new SecondPlayer();
+                FirstPlayer = new BetterFirstPlayer();
+                SecondPlayer = new HumanPlayer();
             }
             else if (Version == "Komputer vs. Komputer")
             {
-                FirstPlayer = new BetterFirstPlayer();
-                SecondPlayer = new HumanPlayer();
+                FirstPlayer = new FirstPlayer();
+                SecondPlayer = new SecondPlayer();
             }
             else
             {

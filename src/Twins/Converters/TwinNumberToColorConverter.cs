@@ -16,7 +16,7 @@ namespace Twins.Converters
             switch (twinValue)
             {
                 case 0:
-                    color = Brushes.LightCyan;
+                    color = Brushes.Purple;
                     break;
                 case 1:
                     color = Brushes.Crimson;
