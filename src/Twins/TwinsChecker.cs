@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Twins.Helpers;
 using Twins.Model;
 
 namespace Twins
@@ -32,20 +33,7 @@ namespace Twins
         {
             var colorMap = new Dictionary<int, int>(100);
 
-            return string.Join(" ", sequence.Select(x => NormalizeColor(x.Color ?? -1, colorMap).ToString()));
-        }
-
-        private static int NormalizeColor(int color, Dictionary<int, int> colorMap)
-        {
-            if (colorMap.ContainsKey(color))
-            {
-                return colorMap[color];
-            }
-
-            var normalizedColor = colorMap.Count;
-            colorMap[color] = normalizedColor;
-
-            return normalizedColor;
+            return string.Join(" ", sequence.Select(x => ColorNormalizer.NormalizeColor(x.Color ?? -1, colorMap).ToString()));
         }
 
         public static Tuple<IEnumerable<BoardItem>, IEnumerable<BoardItem>> FindTightTwins(ICollection<BoardItem> sequence)

@@ -118,7 +118,9 @@ namespace Twins.Players
 
         public static string SerializeMinMoveParameters(List<BoardItem> board, int colorCount, int maxSize)
         {
-            return string.Join(" ", board.Select(x => x.Color ?? -1).ToString()) + ", " + colorCount + ", " + maxSize;
+            var colorMap = new Dictionary<int, int>(100);
+
+            return string.Join(" ", board.Select(x => ColorNormalizer.NormalizeColor(x.Color ?? -1, colorMap).ToString())) + ", " + colorCount + ", " + maxSize;
         }
     }
 }
