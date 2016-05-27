@@ -8,6 +8,8 @@ namespace Twins.Players
 {
     public class BetterFirstPlayer : IPlayer
     {
+        private static readonly Random _random = new Random();
+
         public async Task Move(MainViewModel viewModel)
         {
             await Task.Delay(viewModel.MoveDelay * 1000);
@@ -32,7 +34,7 @@ namespace Twins.Players
             public int rank;
         }
 
-        static public FirstPlayerMove MaxMove(List<BoardItem> board, int position, int colorCount, int maxSize)
+        public static FirstPlayerMove MaxMove(List<BoardItem> board, int position, int colorCount, int maxSize)
         {
             if (TwinsChecker.CheckTwins(board))
             {
@@ -40,7 +42,9 @@ namespace Twins.Players
                 throw new Exception();
             }
             var bestMove = new FirstPlayerMove() { rank = int.MinValue };
-            for (int color = 0; color < colorCount; color++)
+
+            var colors = Enumerable.Range(0, colorCount).OrderBy(_ => _random.Next()).Take(5);
+            foreach(var color in colors)    
             {
                 var newBoard = board.ConvertAll(_ => new BoardItem(_.Color)).ToList();
                 newBoard[position].Color = color;
@@ -70,7 +74,7 @@ namespace Twins.Players
             return bestMove;
         }
 
-        static public SecondPlayerMove MinMove(List<BoardItem> board, int colorCount, int maxSize)
+        public static SecondPlayerMove MinMove(List<BoardItem> board, int colorCount, int maxSize)
         {
             if (board.Count() == maxSize || TwinsChecker.CheckTwins(board))
             {
@@ -78,7 +82,9 @@ namespace Twins.Players
                 throw new Exception();
             }
             var bestMove = new SecondPlayerMove() { rank = int.MaxValue };
-            for (int position = 0; position <= board.Count; position++)
+
+            var positions = Enumerable.Range(0, board.Count).OrderBy(_ => _random.Next()).Take(5);
+            foreach(var position in positions)
             {
                 var newBoard = board.ConvertAll(_ => new BoardItem(_.Color)).ToList();
                 //Wastawiamy element
