@@ -12,6 +12,19 @@ namespace Twins
     public class TwinsCheckerTest
     {
         [TestMethod]
+        public void NormalizeSequence()
+        {
+            var sequence1 = Sequence("121");
+            var sequence2 = Sequence("414");
+            
+            var normalized1 = TwinsChecker.SequenceToNormalizedString(sequence1);
+            var normalized2 = TwinsChecker.SequenceToNormalizedString(sequence2);
+
+            Assert.AreEqual("0 1 0", normalized1);
+            Assert.AreEqual("0 1 0", normalized2);
+        }
+
+        [TestMethod]
         public void CheckTightTwins()
         {
             var sequence1 = Sequence("312123");

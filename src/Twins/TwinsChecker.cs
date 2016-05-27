@@ -17,7 +17,7 @@ namespace Twins
         /// <returns></returns>
         public static bool CheckTwins(ICollection<BoardItem> sequence)
         {
-            var sequenceString = SequenceToString(sequence);
+            var sequenceString = SequenceToNormalizedString(sequence);
             if (Cache.ContainsKey(sequenceString))
             {
                 return Cache[sequenceString];
@@ -28,9 +28,24 @@ namespace Twins
             return result;
         }
 
-        public static string SequenceToString(ICollection<BoardItem> sequence)
+        public static string SequenceToNormalizedString(ICollection<BoardItem> sequence)
         {
-            return string.Join(" ", sequence.Select(x => x.Color.ToString()));
+            var colorMap = new Dictionary<int, int>(1000);
+
+            return string.Join(" ", sequence.Select(x => NormalizeColor(x.Color ?? -1, colorMap).ToString()));
+        }
+
+        private static int NormalizeColor(int color, Dictionary<int, int> colorMap)
+        {
+            if (colorMap.ContainsKey(color))
+            {
+                return colorMap[color];
+            }
+
+            var normalizedColor = colorMap.Count;
+            colorMap[color] = normalizedColor;
+
+            return normalizedColor;
         }
 
         public static Tuple<IEnumerable<BoardItem>, IEnumerable<BoardItem>> FindTightTwins(ICollection<BoardItem> sequence)
