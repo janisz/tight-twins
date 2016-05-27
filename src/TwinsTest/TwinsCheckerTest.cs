@@ -65,9 +65,9 @@ namespace Twins
         {
             //TODO: Test interface not helper methods
             var move = BetterFirstPlayer.MinMove(Sequence("02012"), 3, 7);
-            Assert.AreEqual(1, move.position);
+            Assert.AreEqual(1, move.Position);
             move = BetterFirstPlayer.MinMove(Sequence("01202"), 3, 7);
-            Assert.AreEqual(2, move.position);
+            Assert.AreEqual(2, move.Position);
         }
 
         public static List<BoardItem> Sequence(string seq)
