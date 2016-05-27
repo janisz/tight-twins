@@ -14,25 +14,33 @@ namespace Twins
         [TestMethod]
         public void CheckTightTwins()
         {
-            var twins1 = TwinsChecker.FindTightTwins(Sequence("312123"));
-            Assert.IsNotNull(twins1);
+            var sequence1 = Sequence("312123");
+            var twins1 = TwinsChecker.FindTightTwins(sequence1);
+            var areTwins1 = TwinsChecker.CheckTwins(sequence1);
+            Assert.IsTrue(areTwins1);
             var twin1a = twins1.Item1.Select(x => x.Value).ToArray();
             var twin1b = twins1.Item2.Select(x => x.Value).ToArray();
             CollectionAssert.AreEqual(new[] { 1, 2 }, twin1a);
             CollectionAssert.AreEqual(new[] { 3, 4 }, twin1b);
 
-            var twins2 = TwinsChecker.FindTightTwins(Sequence("231213231"));
-            Assert.IsNotNull(twins2);
+            var sequence2 = Sequence("231213231");
+            var twins2 = TwinsChecker.FindTightTwins(sequence2);
+            var areTwins2 = TwinsChecker.CheckTwins(sequence2);
+            Assert.IsTrue(areTwins2);
             var twin2a = twins2.Item1.Select(x => x.Value).ToArray();
             var twin2b = twins2.Item2.Select(x => x.Value).ToArray();
             CollectionAssert.AreEqual(new[] { 2, 3, 5 }, twin2a);
             CollectionAssert.AreEqual(new[] { 4, 6, 7 }, twin2b);
 
-            var twins3 = TwinsChecker.FindTightTwins(Sequence("123132312"));
-            Assert.IsNull(twins3);
+            var sequence3 = Sequence("123132312");
+            var twins3 = TwinsChecker.FindTightTwins(sequence3);
+            var areTwins3 = TwinsChecker.CheckTwins(sequence3);
+            Assert.IsFalse(areTwins3);
 
-            var twins4 = TwinsChecker.FindTightTwins(Sequence("11"));
-            Assert.IsNotNull(twins4);
+            var sequence4 = Sequence("11");
+            var twins4 = TwinsChecker.FindTightTwins(sequence4);
+            var areTwins4 = TwinsChecker.CheckTwins(sequence4);
+            Assert.IsTrue(areTwins4);
             var twin4a = twins4.Item1.Select(x => x.Value).ToArray();
             var twin4b = twins4.Item2.Select(x => x.Value).ToArray();
             CollectionAssert.AreEqual(new[] { 0 }, twin4a);
