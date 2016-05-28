@@ -7,5 +7,9 @@ namespace Twins
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            ArrayExtensions.Equals(null, null);
+        }
     }
 }
