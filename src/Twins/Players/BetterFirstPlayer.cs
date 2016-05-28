@@ -9,6 +9,8 @@ namespace Twins.Players
 {
     public class BetterFirstPlayer : IPlayer
     {
+        private static readonly Random _random = new Random();
+
         static Dictionary<string, SecondPlayerMove> MinMoveCache = new Dictionary<string, SecondPlayerMove>(1000);
 
         public async Task Move(MainViewModel viewModel)

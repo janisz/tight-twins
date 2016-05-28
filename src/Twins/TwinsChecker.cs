@@ -55,8 +55,9 @@ namespace Twins
 
     public static class ArrayExtensions
     {
-        private const int maxLenght = 123456;
+        private const int maxLenght = 1234;
         private static readonly int[] onesCount = new int[maxLenght];
+        private static IEnumerable<int>[] numbersWithOnesCache = new IEnumerable<int>[maxLenght];
 
         static ArrayExtensions()
         {
@@ -64,13 +65,18 @@ namespace Twins
             {
                 onesCount[i] = Convert.ToString(i, 2).Split('1').Length - 1;
             }
+
+            for (int i = 0; i < maxLenght; i++)
+            {
+                numbersWithOnesCache[i] = numbersWithOnes(i).ToList();
+            }
         }
 
         public static Tuple<IEnumerable<BoardItem>, IEnumerable<BoardItem>> CheckTightTwins(this ICollection<BoardItem> sequence, int index, int subSequenceLength)
         {
             for (int i = index; i <= sequence.Count - subSequenceLength; i++)
             {
-                var subsets = Subsets(sequence.Skip(i).Take(subSequenceLength));
+                var subsets = Subsets(sequence.Skip(i).Take(subSequenceLength)).ToList();
                 foreach (var pair in subsets)
                 {
                     if (pair.Item1.Count() != subSequenceLength / 2)
@@ -105,12 +111,12 @@ namespace Twins
             List<BoardItem> list = source.ToList();
             int length = list.Count;
 
-            if (length > maxLenght)
+/*            if (length > maxLenght)
             {
                 throw new ArgumentOutOfRangeException("length", length, "Lenght must be less than " + maxLenght);
             }
-
-            foreach (int count in NumbersWithOnes(length / 2))
+            */
+            foreach (int count in NumbersWithOnes(length / 2).ToList())
             {
                 List<BoardItem> first = new List<BoardItem>();
                 List<BoardItem> second = new List<BoardItem>();
@@ -130,7 +136,13 @@ namespace Twins
                 yield return new Tuple<IEnumerable<BoardItem>, IEnumerable<BoardItem>>(first, second);
             }
         }
+       
         private static IEnumerable<int> NumbersWithOnes(int n)
+        {
+            return numbersWithOnesCache[n];
+        }
+
+        private static IEnumerable<int> numbersWithOnes(int n)
         {
             for (int i = 0; i < onesCount.Length; i++)
             {
