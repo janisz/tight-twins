@@ -1,0 +1,593 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage[]{algorithmicx}
+\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
+\usepackage[polish]{babel}
+\selectlanguage{polish}
+%%% fix for \lll
+\let\babellll\lll
+\let\lll\relax
+\usetheme{Warsaw}
+
+\title{
+	Gra w unikanie ciasnych bliźniaków\\
+}
+
+\author{
+	Jakub Dutkowski \and
+	Karol Dzitkowski \and
+	Tomasz Janiszewski \and
+	Michał Padzik
+}
+
+\institute[MiniPW] % (optional)
+{
+  Wydział Matematyki i Nauk Informacyjnych\\ Politechnika Warszawska
+}
+
+\date[VLC 2013] % (optional)
+{Kombinatoryka na słowach, Czerwiec 2016}
+
+\logo{\includegraphics[height=1.0cm]{img/mini-logo.png}}
+
+\begin{document}
+
+\frame{\titlepage}
+\begin{frame}
+\tableofcontents
+\end{frame}
+
+\section{Opis Gry}
+
+\begin{frame}
+\frametitle{Temat}
+	\begin{itemize}
+		\item Gra komputer kontra człowiek (co najmniej 2 poziomy trudności)
+		\item Gra komputer kontra komputer (co najmniej 2 poziomy trudności)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Definicje}
+	\begin{block}{Bliźniaki}\label{def:blizniak}
+Niech
+$S = s_1 s_2 s_3 \ldots\ s_n$
+będzie skonczoną sekwencją symboli. Dwie pod-sekwencje
+$S_1 = s_{i_1} s_{i_2} s_{i_3} \ldots\ s_{i_k}$
+i
+$S_2 = s_{j_1} s_{j_2} s_{j_3} \ldots\ s_{j_k}$
+nazywane są bliźniakami jeśli są identyczne oraz rozłączne, czyli
+$$
+\left\{ \begin{array}{ll}
+s_{i_p} = s_{j_p} &\forall p = {1, 2, 3, \ldots\, k} \\
+i_p \neq j_p &\forall p,q = {1, 2, 3, \ldots\, k}
+\end{array} \right.
+$$
+	\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Definicje}
+	\begin{block}{Ciasne Bliźniaki}\label{def:ciasne_blizniak}
+Mówimy, że para bliźniaków jest ciasna,
+jeżeli połączenie zbiorów ich indeksów tworzy pełny segment
+liczb całkowitych,
+czyli para tworzy jeden blok.
+	\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Definicje}
+	\begin{examples}{Przykład}
+Dla przykładu ciąg
+$23\overline{12}\underline{1}\overline{3}\underline{23}1$
+ma ciasnych bliźniaków
+w formie $123$, natomiast ciąg $123132312$ nie ma żadnych.
+	\end{examples}
+\end{frame}
+
+\begin{frame}
+\frametitle{Definicje}
+Gra odbywa się na planszy -- słowie. Początkowo nie ma na niej nic.
+Gracz pierwszy wskazuje miejsce w słowie w którym należy dopisać znak.
+Gracz drugi dopisuje znak z alfabetu. Gracz pierwszy wygrywa
+gdy w słowie znajdą się ciasne bliźniaki.
+Gracz drugi wygrywa gdy w gra się zakończy i w słowie nie będzie ciasnych
+bliźniaków.
+Gra kończy się gdy w słowie są ciasne bliźniaki lub
+został osiągnięty limit długości słowa.
+\end{frame}
+
+\section{Algorytmy}
+
+\begin{frame}
+\frametitle{Sprawdzanie czy sekwencja zawiera ciasnych bliźniaków}
+
+\begin{algorithmic}
+\State $S \gets $ sekwencja wejściowa
+\State $n \gets $ długość $S$
+\ForAll{$i \in 0\dots l$}
+	\ForAll{$j \in 0\dots n-i$}
+		\State $s \gets S[j \dots i]$
+		\If {$s$ jest ciasnym bliźniakiem}
+			\State
+		    \Return $true$
+	    \EndIf
+	\EndFor
+\EndFor
+\State
+\Return $false$
+\end{algorithmic}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sprawdzanie czy sekwencja jest ciasnym bliźniakiem}
+
+\begin{algorithmic}
+\State $S \gets $ sekwencja wejściowa
+\State $subsets \gets $ wszystkie równoliczne podziały $S$ na dwie sekwencje
+\ForAll{$(a,b) \in subests$}
+		\If {$a = b$}
+			\State
+		    \Return $true$
+	    \EndIf
+\EndFor
+\State
+\Return $false$
+\end{algorithmic}
+
+\end{frame}
+
+\begin{frame}
+\begin{algorithmic}
+\State $subsets \gets \emptyset$
+\ForAll{$i \in 0\dots 2^n$}
+		\State $b \gets $ binarna reprezentacja $i$
+		\State $ones \gets \sum b $ \Comment{liczba jedynek w $b$}
+		\If {$ones = \frac{n}{2}$}
+			\State $A \gets \emptyset$
+			\State $B \gets \emptyset$
+			\ForAll{$i \in 0 \dots n$}
+				\If {$ones[i] = 1$}
+					\State
+					\Call{Append}{$A, S[i]$}
+				\Else
+					\State
+					\Call{Append}{$B, S[i]$}
+				\EndIf
+			\EndFor
+			\State $subsets \gets subsets ~ \cup ~ (A,B)$
+	    \EndIf
+\EndFor
+\State
+\Return $subsets$
+\end{algorithmic}
+
+\end{frame}
+
+\subsection{MinMax}
+
+\begin{frame}
+\frametitle{MinMax}
+
+Gracz pierwszy stara się zakończyć grę z jak najkrótszym słowem.
+Natomiast gracz drugi z jak najdłuższym.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{MinMax}
+
+\begin{algorithmic}
+\Function{MaxMove}{$S$}
+	\State $r \gets -\infty$
+	\ForAll{możliwy ruch}
+			\State $m \gets -\infty$
+			\If {ruch nie powoduje powstanie ciasnych bliźniaków}
+				\If {osiągnięto limit słowa}
+					\State $m \gets +\infty$ \Comment{Wygrywamy}
+				\Else
+					\State $m \gets $ \Call{MinMove}{plansza po ruchu}
+				\EndIf
+			\Else
+				\State $m \gets $ długość słowa \Comment{Chcemy grać jak najdłużej}
+			\EndIf
+			\State $r \gets $ \Call{$max$}{$r, m$}
+	\EndFor
+	\State
+	\Return ruch z wartością $r$
+\EndFunction
+\end{algorithmic}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{MinMax}
+
+\begin{algorithmic}
+\Function{MinMove}{$S$}
+	\State $r \gets +\infty$
+	\ForAll{możliwy ruch}
+			\State $m \gets +\infty$
+			\If {ruch powoduje powstanie ciasnych bliźniaków}
+				\If {osiągnięto limit słowa}
+					\State $m \gets -\infty$ \Comment{Wygrywamy}
+				\Else
+					\State $m \gets $ \Call{MaxMove}{plansza po ruchu}
+				\EndIf
+			\Else
+				\State $m \gets $ długość słowa \Comment{Chcemy grać jak najkrócej}
+			\EndIf
+			\State $r \gets $ \Call{$min$}{$r, m$}
+	\EndFor
+	\State
+	\Return ruch z wartością $r$
+\EndFunction
+\end{algorithmic}
+
+\end{frame}
+
+\section{Optymalizacje}
+
+\begin{frame}
+\frametitle{Sprawdzanie czy sekwencja zawiera ciasnych bliźniaków}
+
+\begin{algorithmic}
+\State $S \gets $ sekwencja wejściowa
+\State $n \gets $ długość $S$
+\ForAll{$i \in 0\dots l$} \Comment{Możemy sprawdzać tylko parzyste}
+	\ForAll{$j \in 0\dots n-i$}
+		\State $s \gets S[j \dots i]$
+		\If {$s$ jest ciasnym bliźniakiem}
+			\State
+		    \Return $true$
+	    \EndIf
+	\EndFor
+\EndFor
+\State
+\Return $false$
+\end{algorithmic}
+\end{frame}
+
+\begin{frame}
+
+\includegraphics[height=1\textheight]{img/cache-all-the-things.png}
+
+
+\end{frame}
+
+\begin{frame}
+\begin{examples}
+$$
+1257 \equiv 0123 \equiv 1234
+$$
+\end{examples}
+\end{frame}
+
+\begin{frame}
+\frametitle{Znormalizowana sekwencja}
+\begin{algorithmic}
+\State $S \gets $ sekwencja wejściowa
+\State $T \gets \emptyset$
+\State $U \gets \emptyset$
+\ForAll{$a \in S$}
+		\If {$(a, i) \in U$}
+			\State
+			\Call{Append}{$T, i$}
+		\Else
+			\Call{Append}{$T, |U|$}
+			\State $U \gets U ~ \cup ~ (a, |U|)$
+	    \EndIf
+\EndFor
+\State
+\Return T
+\end{algorithmic}
+
+\end{frame}
+
+
+\end{document}
+
+
+Submit Click To Copy Select All Text
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage[]{algorithmicx}
+\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
+\usepackage[polish]{babel}
+\selectlanguage{polish}
+%%% fix for \lll
+\let\babellll\lll
+\let\lll\relax
+\usetheme{Warsaw}
+
+\title{
+	Gra w unikanie ciasnych bliźniaków\\
+}
+
+\author{
+	Jakub Dutkowski \and
+	Karol Dzitkowski \and
+	Tomasz Janiszewski \and
+	Michał Padzik
+}
+
+\institute[MiniPW] % (optional)
+{
+  Wydział Matematyki i Nauk Informacyjnych\\ Politechnika Warszawska
+}
+
+\date[VLC 2013] % (optional)
+{Kombinatoryka na słowach, Czerwiec 2016}
+
+\logo{\includegraphics[height=1.0cm]{img/mini-logo.png}}
+
+\begin{document}
+
+\frame{\titlepage}
+\begin{frame}
+	\tableofcontents
+\end{frame}
+
+\section{Opis Gry}
+
+\begin{frame}
+	\frametitle{Temat}
+	\begin{itemize}
+		\item Gra komputer kontra człowiek (co najmniej 2 poziomy trudności)
+		\item Gra komputer kontra komputer (co najmniej 2 poziomy trudności)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Definicje}
+	\begin{block}{Bliźniaki}\label{def:blizniak}
+		Niech
+		$S = s_1 s_2 s_3 \ldots\ s_n$
+		będzie skonczoną sekwencją symboli. Dwie pod-sekwencje
+		$S_1 = s_{i_1} s_{i_2} s_{i_3} \ldots\ s_{i_k}$
+		i
+		$S_2 = s_{j_1} s_{j_2} s_{j_3} \ldots\ s_{j_k}$
+		nazywane są bliźniakami jeśli są identyczne oraz rozłączne, czyli
+		$$
+		\left\{ \begin{array}{ll}
+		s_{i_p} = s_{j_p} &\forall p = {1, 2, 3, \ldots\, k} \\
+		i_p \neq j_p &\forall p,q = {1, 2, 3, \ldots\, k}
+		\end{array} \right.
+		$$
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Definicje}
+	\begin{block}{Ciasne Bliźniaki}\label{def:ciasne_blizniak}
+		Mówimy, że para bliźniaków jest ciasna,
+		jeżeli połączenie zbiorów ich indeksów tworzy pełny segment
+		liczb całkowitych,
+		czyli para tworzy jeden blok.
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Definicje}
+	\begin{examples}{Przykład}
+		Dla przykładu ciąg
+		$23\overline{12}\underline{1}\overline{3}\underline{23}1$
+		ma ciasnych bliźniaków
+		w formie $123$, natomiast ciąg $123132312$ nie ma żadnych.
+	\end{examples}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Definicje}
+	Gra odbywa się na planszy -- słowie. Początkowo nie ma na niej nic.
+	Gracz pierwszy wskazuje miejsce w słowie w którym należy dopisać znak.
+	Gracz drugi dopisuje znak z alfabetu. Gracz pierwszy wygrywa
+	gdy w słowie znajdą się ciasne bliźniaki.
+	Gracz drugi wygrywa gdy w gra się zakończy i w słowie nie będzie ciasnych
+	bliźniaków.
+	Gra kończy się gdy w słowie są ciasne bliźniaki lub
+	został osiągnięty limit długości słowa.
+\end{frame}
+
+\section{Algorytmy}
+
+\begin{frame}
+	\frametitle{Sprawdzanie czy sekwencja zawiera ciasnych bliźniaków}
+
+	\begin{algorithmic}
+		\State $S \gets $ sekwencja wejściowa
+		\State $n \gets $ długość $S$
+		\ForAll{$i \in 0\dots l$}
+		\ForAll{$j \in 0\dots n-i$}
+		\State $s \gets S[j \dots i]$
+		\If {$s$ jest ciasnym bliźniakiem}
+		\State
+		\Return $true$
+		\EndIf
+		\EndFor
+		\EndFor
+		\State
+		\Return $false$
+	\end{algorithmic}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Sprawdzanie czy sekwencja jest ciasnym bliźniakiem}
+
+	\begin{algorithmic}
+		\State $S \gets $ sekwencja wejściowa
+		\State $subsets \gets $ wszystkie równoliczne podziały $S$ na dwie sekwencje
+		\ForAll{$(a,b) \in subests$}
+		\If {$a = b$}
+		\State
+		\Return $true$
+		\EndIf
+		\EndFor
+		\State
+		\Return $false$
+	\end{algorithmic}
+
+\end{frame}
+
+\begin{frame}
+	\begin{algorithmic}
+		\State $subsets \gets \emptyset$
+		\ForAll{$i \in 0\dots 2^n$}
+		\State $b \gets $ binarna reprezentacja $i$
+		\State $ones \gets \sum b $ \Comment{liczba jedynek w $b$}
+		\If {$ones = \frac{n}{2}$}
+		\State $A \gets \emptyset$
+		\State $B \gets \emptyset$
+		\ForAll{$i \in 0 \dots n$}
+		\If {$ones[i] = 1$}
+		\State
+		\Call{Append}{$A, S[i]$}
+		\Else
+		\State
+		\Call{Append}{$B, S[i]$}
+		\EndIf
+		\EndFor
+		\State $subsets \gets subsets ~ \cup ~ (A,B)$
+		\EndIf
+		\EndFor
+		\State
+		\Return $subsets$
+	\end{algorithmic}
+
+\end{frame}
+
+\subsection{MinMax}
+
+\begin{frame}
+	\frametitle{MinMax}
+
+	Gracz pierwszy stara się zakończyć grę z jak najkrótszym słowem.
+	Natomiast gracz drugi z jak najdłuższym.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{MinMax}
+
+	\begin{algorithmic}
+		\Function{MaxMove}{$S$}
+		\State $r \gets -\infty$
+		\ForAll{możliwy ruch}
+		\State $m \gets -\infty$
+		\If {ruch nie powoduje powstanie ciasnych bliźniaków}
+		\If {osiągnięto limit słowa}
+		\State $m \gets +\infty$ \Comment{Wygrywamy}
+		\Else
+		\State $m \gets $ \Call{MinMove}{plansza po ruchu}
+		\EndIf
+		\Else
+		\State $m \gets $ długość słowa \Comment{Chcemy grać jak najdłużej}
+		\EndIf
+		\State $r \gets $ \Call{$max$}{$r, m$}
+		\EndFor
+		\State
+		\Return ruch z wartością $r$
+		\EndFunction
+	\end{algorithmic}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{MinMax}
+
+	\begin{algorithmic}
+		\Function{MinMove}{$S$}
+		\State $r \gets +\infty$
+		\ForAll{możliwy ruch}
+		\State $m \gets +\infty$
+		\If {ruch powoduje powstanie ciasnych bliźniaków}
+		\If {osiągnięto limit słowa}
+		\State $m \gets -\infty$ \Comment{Wygrywamy}
+		\Else
+		\State $m \gets $ \Call{MaxMove}{plansza po ruchu}
+		\EndIf
+		\Else
+		\State $m \gets $ długość słowa \Comment{Chcemy grać jak najkrócej}
+		\EndIf
+		\State $r \gets $ \Call{$min$}{$r, m$}
+		\EndFor
+		\State
+		\Return ruch z wartością $r$
+		\EndFunction
+	\end{algorithmic}
+
+\end{frame}
+
+\section{Optymalizacje}
+
+\begin{frame}
+	\frametitle{Sprawdzanie czy sekwencja zawiera ciasnych bliźniaków}
+
+	\begin{algorithmic}
+		\State $S \gets $ sekwencja wejściowa
+		\State $n \gets $ długość $S$
+		\ForAll{$i \in 0\dots l$} \Comment{Możemy sprawdzać tylko parzyste}
+		\ForAll{$j \in 0\dots n-i$}
+		\State $s \gets S[j \dots i]$
+		\If {$s$ jest ciasnym bliźniakiem}
+		\State
+		\Return $true$
+		\EndIf
+		\EndFor
+		\EndFor
+		\State
+		\Return $false$
+	\end{algorithmic}
+\end{frame}
+
+\begin{frame}
+
+	\includegraphics[height=1\textheight]{img/cache-all-the-things.png}
+
+
+\end{frame}
+
+\begin{frame}
+	\begin{examples}
+		$$
+		1257 \equiv 0123 \equiv 1234
+		$$
+	\end{examples}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Znormalizowana sekwencja}
+	\begin{algorithmic}
+		\State $S \gets $ sekwencja wejściowa
+		\State $T \gets \emptyset$
+		\State $U \gets \emptyset$
+		\ForAll{$a \in S$}
+		\If {$(a, i) \in U$}
+		\State
+		\Call{Append}{$T, i$}
+		\Else
+		\Call{Append}{$T, |U|$}
+		\State $U \gets U ~ \cup ~ (a, |U|)$
+		\EndIf
+		\EndFor
+		\State
+		\Return T
+	\end{algorithmic}
+
+\end{frame}
+
+
+\end{document}
